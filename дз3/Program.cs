@@ -1,82 +1,156 @@
 ﻿using System;
+using System.Text;
 
-class Program
+namespace Vladmainproject
 {
-    static void Main()
+    enum DaysOfWeek
     {
-        Console.WriteLine("№4.1");
-        Console.Write("Введите номер дня в году: ");
-        int dy = int.Parse(Console.ReadLine());
+        Понедельник = 1,
+        Вторник = 2,
+        Среда = 3,
+        Четверг = 4,
+        Пятница = 5,
+        Суббота = 6,
+        Воскресенье = 7
+    }
 
-        int[] dm = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        string[] mN = { "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
-
-        int mI = 0;
-        while (dy > dm[mI])
+    class Program
+    {
+        static void Task1()
         {
-            dy -= dm[mI];
-            mI++;
-        }
+            int[] s = { 2, 5, 8, 12, 13, 15, 18, 17, 25, 30 };
 
-        Console.WriteLine($"{dy} {mN[mI]}");
+            bool isSorted = true;
+            int vI = -1;
 
-        Console.WriteLine("№4.2");
-
-        Console.Write("Введите номер дня в году: ");
-
-        try
-        {
-            int dy2 = int.Parse(Console.ReadLine());
-
-
-            if (dy2 < 1 || dy2 > 365)
+            for (int i = 0; i < s.Length - 1; i++)
             {
-                Console.WriteLine("Число должно быть в диапазоне от 1 до 365!");
+                if (s[i] >= s[i + 1])
+                {
+                    isSorted = false;
+                    vI = i + 1;
+                    break;
+                }
             }
 
-            int[] dm2 = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-            string[] mN2 = { "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
-
-            int mI2 = 0;
-            while (dy2 > dm2[mI2])
+            if (isSorted)
             {
-                dy2 -= dm2[mI2];
-                mI2++;
+                Console.WriteLine("Последовательность упорядочена по возрастанию.");
+            }
+            else
+            {
+                Console.WriteLine($"Первое нарушение на позиции: {vI}");
+            }
+            Console.WriteLine();
+        }
+
+        static void Task2()
+        {
+            try
+            {
+                int k = int.Parse(Console.ReadLine());
+
+                if (k < 6 || k > 14)
+                {
+                    Console.WriteLine("Номер карты должен быть от 6 до 14!");
+                }
+
+                if (k == 11) Console.WriteLine("Валет");
+                else if (k == 12) Console.WriteLine("Дама");
+                else if (k == 13) Console.WriteLine("Король");
+                else if (k == 14) Console.WriteLine("Туз");
+                else Console.WriteLine($"{k}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Ошибка ввода.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+            finally
+            {
+                Console.WriteLine();
+            }
+        }
+
+        static void Task3()
+        {
+            string input = Console.ReadLine();
+            string iL = input.Trim().ToLower();
+
+            switch (iL)
+            {
+                case "jabroni":
+                    Console.WriteLine("Patron Tequila");
+                    break;
+                case "school counselor":
+                    Console.WriteLine("Anything with Alcohol");
+                    break;
+                case "programmer":
+                    Console.WriteLine("Hipster Craft Beer");
+                    break;
+                case "bike gang member":
+                    Console.WriteLine("Moonshine");
+                    break;
+                case "politician":
+                    Console.WriteLine("Your tax dollars");
+                    break;
+                case "rapper":
+                    Console.WriteLine("Cristal");
+                    break;
+                default:
+                    Console.WriteLine("Beer");
+                    break;
+            }
+            Console.WriteLine();
+        }
+
+        static void Task4()
+        {
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int dayNum) && dayNum >= 1 && dayNum <= 7)
+            {
+                DaysOfWeek day = (DaysOfWeek)dayNum;
+                Console.WriteLine($"{day}");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка");
+            }
+            Console.WriteLine();
+        }
+
+        static void Task5()
+        {
+            string[] items = { "Car", "Hello Kitty", "Book", "Barbie doll", "Phone", "Hello Kitty" };
+            int dollsInBag = 0;
+
+            foreach (string item in items)
+            {
+                if (item == "Hello Kitty" || item == "Barbie doll")
+                {
+                    dollsInBag++;
+                }
             }
 
-            Console.WriteLine($"{dy2} {mN2[mI2]}");
+            Console.WriteLine($"{dollsInBag}");
+            Console.WriteLine();
         }
-        catch
+
+        static void Main()
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
+            Task1();
+            Task2();
+            Task3();
+            Task4();
+            Task5();
+
+            Console.ReadLine();
         }
-        Console.WriteLine("ДОмашнее задание 4.1");
-        Console.Write("Введите год: ");
-        int year = int.Parse(Console.ReadLine());
-
-        Console.Write("Введите номер дня в году: ");
-        int dy3 = int.Parse(Console.ReadLine());
-
-        bool Leap = (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
-
-        int[] dm3;
-        if (Leap)
-        {
-            dm3 = new int[] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        }
-        else
-        {
-            dm3 = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        }
-
-        string[] mN3 = { "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
-
-        int mI3 = 0;
-        while (dy3 > dm3[mI3])
-        {
-            dy3 -= dm3[mI3];
-            mI3++;
-        }
-
-        Console.WriteLine($"{dy3} {mN3[mI3]}");
     }
 }
